@@ -10,6 +10,7 @@ export async function getMatches(){
         console.log(date)
         const resp = await axios.get('http://localhost:8080/match-display/v1/matches',
         {params});
+        // const resp = await axios.get('http://localhost:8080/match-display/v1/matches');
         return await resp.data;
     } catch (error) {
         return [];

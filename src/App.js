@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getMatches } from "./services/MatchesService";
+import { Spinner, Table } from "react-bootstrap";
 
 function App() {
     const [error, setError] = useState(null);
@@ -44,22 +45,42 @@ function App() {
     }, []);
 
    
+   
     if (error) {
         return (
             <div>Error: {error.message}</div>
         );
     } else if (!isLoaded){
-        return <div>Loading...</div>
-    } else if (matches.length === 0) {
-        return <div>No matches available</div>
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+
+        );
+        // return <div>Loading...</div>
     } else {
         return (
-            <ul>
-            {matches.map(match => 
-                <li >{match.player1_name} {match.player2_name} {match.round} {match.tournament_game_name}</li>)}
-            </ul>
+            <Table striped bordered hover options={ { noDataText: 'No matches available' } }>
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Player 1</th>
+                        <th>Player 2</th>
+                        <th>Game</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {matches.map(match => 
+                    <tr>
+                        <td>{match.round}</td>
+                        <td>{match.player1_name}</td>
+                        <td>{match.player2_name}</td>
+                        <td>{match.tournament_game_name}</td>
+                    </tr>
+                )}
+                </tbody>
+            </Table>
         );
     }
 }
-
 export default App;
