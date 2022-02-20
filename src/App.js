@@ -22,15 +22,36 @@ function App() {
                     setIsLoaded(true);
                     setError(error);
                 }
-            )
+            );
+        const interval = setInterval(() => {
+            getMatches()
+            .then(
+                (result) => {
+                    console.log(result);
+                    setMatches(result.match_list);
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            );
+        }, 30000);
+        return () => clearInterval(interval);
+      
     }, []);
 
+   
     if (error) {
         return (
             <div>Error: {error.message}</div>
         );
     } else if (!isLoaded){
         return <div>Loading...</div>
+    } else if (matches.length === 0) {
+        return <div>No matches available</div>
     } else {
         return (
             <ul>

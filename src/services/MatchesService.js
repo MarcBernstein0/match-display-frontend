@@ -1,7 +1,16 @@
+import axios from "axios";
+import dayjs from "dayjs";
+
 export async function getMatches(){
     try {
-        const resp = await fetch('http://localhost:8080/match-display/v1/matches')
-        return await resp.json();
+        const date = dayjs().format('YYYY-MM-DD')
+        const params = {
+            date: date
+        };
+        console.log(date)
+        const resp = await axios.get('http://localhost:8080/match-display/v1/matches',
+        {params});
+        return await resp.data;
     } catch (error) {
         return [];
     }
