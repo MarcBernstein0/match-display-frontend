@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { getMatches } from "./services/MatchesService";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [matches, setMatches] = useState([]);
+
+
+    useEffect(() => {
+        getMatches()
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    console.log(result);
+                    setMatches(result.match_list);
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, []);
+
+    if (error) {
+        return (
+            <div>Error: {error.message}</div>
+        );
+    } else if (!isLoaded){
+        return <div>Loading...</div>
+    } else {
+        return (
+            <ul>
+            {matches.map(match => 
+                <li >{match.player1_name} {match.player2_name} {match.round} {match.tournament_game_name}</li>)}
+            </ul>
+        );
+    }
 }
 
 export default App;
