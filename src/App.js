@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getMatches } from "./services/MatchesService";
-import { Spinner } from "react-bootstrap";
 import MyTable from "./display/myTable";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result);
+                    // console.log(result);
                     setMatches(result.match_list);
                 },
                 // Note: it's important to handle errors here
@@ -29,19 +28,25 @@ function App() {
             getMatches()
             .then(
                 (result) => {
-                    console.log(result);
+                    // console.log(result);
                     setMatches(result.match_list);
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
                 // exceptions from actual bugs in components.
+            )
+            .catch(
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
+                    console.error("error occured", error)
                 }
             );
-        }, 30000);
-        return () => clearInterval(interval);
+        }, 5* 1000);
+        return () => {
+            clearInterval(interval);
+            setIsLoaded(false);
+        };
       
     }, []);
 
@@ -53,9 +58,10 @@ function App() {
         );
     } else if (!isLoaded){
         return (
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <div>Loading...</div>
+            // <Spinner animation="border" role="status">
+            //     <span className="visually-hidden">Loading...</span>
+            // </Spinner>
 
         );
         // return <div>Loading...</div>

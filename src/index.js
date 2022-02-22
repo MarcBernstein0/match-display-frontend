@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import MyNavbar from './display/navBar';
+// import MyNavbar from './display/navBar';
 import './css/styles.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <MyNavbar />
+    {/* <MyNavbar /> */}
     <App />
   </React.StrictMode>,
   document.getElementById('root')
