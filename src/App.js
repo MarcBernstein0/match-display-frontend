@@ -13,7 +13,7 @@ function App() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    // console.log(result);
+                    console.log(result);
                     setMatches(result.match_list);
                 },
                 // Note: it's important to handle errors here
