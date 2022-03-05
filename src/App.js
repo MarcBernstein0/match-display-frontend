@@ -42,7 +42,7 @@ function App() {
                     console.error("error occured", error)
                 }
             );
-        }, 5* 1000);
+        }, 90000); // 1min 30sec
         return () => {
             clearInterval(interval);
             setIsLoaded(false);
