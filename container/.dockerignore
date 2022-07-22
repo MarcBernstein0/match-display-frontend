@@ -1,6 +1,6 @@
-README.md
 .gitignore
+.git
+README.md
 container/
 node_modules/
-.git
 build/
