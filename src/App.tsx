@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Matches } from './models/matches.interface';
 import { Match } from './api/api';
 import moment from 'moment';
+import DenseTable from './components/table';
 
 function App() {
   const [matchResult, setMatches] = useState<Matches[]>([]);
@@ -21,18 +21,19 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <ul className="Books">
-        {matchResult.map((matchMetaData) => (
-          <li key={matchMetaData.tournament_id}>
-            <h3>{matchMetaData.game_name}</h3>
-            {matchMetaData.match_list.map((match) => (
-              <p>{match.id} {match.player1_name} {match.player2_name} {match.round}</p>
-            ))}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <DenseTable />
+    // <div className="App">
+    //   <ul className="Books">
+    //     {matchResult.map((matchMetaData) => (
+    //       <li key={matchMetaData.tournament_id}>
+    //         <h3>{matchMetaData.game_name}</h3>
+    //         {matchMetaData.match_list.map((match) => (
+    //           <p>{match.id} {match.player1_name} {match.player2_name} {match.round}</p>
+    //         ))}
+    //       </li>
+    //     ))}
+    //   </ul>
+    // </div>
   );
 }
 
