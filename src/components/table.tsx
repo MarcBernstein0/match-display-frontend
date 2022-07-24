@@ -1,6 +1,10 @@
-import { Paper, Table, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Paper, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { TableBody } from "material-ui/Table";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import { match } from "assert";
+import { Matches } from "../models/matches.interface";
+import { TableToolBar } from "./toolbar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -45,32 +49,40 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function CustomizedTables() {
+export default function CustomizedTables(matchData: Matches[]): JSX.Element {
+    // console.log("call in CustomizedTables component", matchData);
+    const game1 = matchData[0];
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                        <StyledTableCell align="right">Calories</StyledTableCell>
-                        <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                        <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                                {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                            <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                            <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                            <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Box sx={{ width: "100%" }}>
+            <Paper sx={{ width: "100%", mb: 2 }}>
+                {/* <TableToolBar gameName={game1.game_name} /> */}
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
+                                <StyledTableCell align="right">Calories</StyledTableCell>
+                                <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
+                                <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
+                                <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <StyledTableRow key={row.name}>
+                                    <StyledTableCell component="th" scope="row">
+                                        {row.name}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right">{row.calories}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+        </Box>
     );
 }
