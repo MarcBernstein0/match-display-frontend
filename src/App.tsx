@@ -1,6 +1,8 @@
+import { Grid } from '@mui/material';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Match } from './api/api';
+import LoadingAnimation from './components/loading';
 import CustomizedTables from './components/table';
 import { Matches } from './models/matches.interface';
 
@@ -28,8 +30,18 @@ function App() {
   console.log("in App function", matchResult, error);
     if (!isError){
       return (
-    
-        <CustomizedTables matchData={matchResult}/>
+        // <Grid display="flex"
+        //     justifyContent="center"
+        //     alignItems="center"
+        //     minHeight="100vh" 
+        // >
+        <div>
+          {matchResult.map((game) => (
+            <CustomizedTables matchData={game} />
+          ))}
+        </div>
+          // <CustomizedTables matchData={matchResult}/>
+        // </Grid>
       );
     } else {
       return (
@@ -39,7 +51,13 @@ function App() {
     
   } else {
     return (
-      <div>Loading...</div>
+      <Grid display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="100vh" 
+      >
+        <LoadingAnimation />
+      </Grid>
     );
   }
 

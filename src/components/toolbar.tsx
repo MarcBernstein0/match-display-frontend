@@ -20,6 +20,7 @@ export function TableToolBar({ gameName }: TableToolbarProps){
                 variant="h6"
                 id="tableTittle"
                 component="div"
+                align="center"
             >
                 {gameName}
             </Typography>
