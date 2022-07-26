@@ -3,8 +3,11 @@ import { Moment } from "moment";
 import { Matches } from "../models/matches.interface";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8080/",
+    baseURL: "http://localhost:8080",
     timeout: 15000,
+    headers: {
+        "Content-type": "application/json"
+      }
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -20,6 +23,6 @@ export const Match = {
         const params = {
             date: dateStr
         }
-        return requests.get('matches', params)
+        return requests.get('/matches', params)
     },
 };

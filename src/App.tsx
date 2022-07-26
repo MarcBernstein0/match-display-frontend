@@ -5,26 +5,37 @@ import CustomizedTables from './components/table';
 import { Matches } from './models/matches.interface';
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [matchResult, setMatches] = useState<Matches[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
+  // const [error, setError] = useState<Error>(null);
   
   useEffect(() => {
     const parsedDate = moment("2022-07-20", "YYYY-MM-DD");
     Match.getMatches(parsedDate)
       .then((data) => {
+        setIsLoaded(true);
         setMatches(data);
       })
       .catch((err) => {
+        setIsLoaded(true);
         setIsError(true);
       });
   }, []);
 
-  console.log("in App function", matchResult, matchResult.length, matchResult[0].game_name);
-  
-  return (
+  if (isLoaded){
+  console.log("in App function", matchResult, matchResult.length);
+    return (
     
-    <CustomizedTables {...matchResult}/>
-  );
+      <CustomizedTables {...matchResult}/>
+    );
+  } else {
+    return (
+      <div>Loading...</div>
+    );
+  }
+
+  
   // const [matchResult, setMatches] = useState<Matches[]>([]);
   // const [isError, setIsError] = useState<boolean>(false);
   

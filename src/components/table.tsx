@@ -51,7 +51,7 @@ const rows = [
 
 export default function CustomizedTables(matchData: Matches[]): JSX.Element {
     // console.log("call in CustomizedTables component", matchData);
-    const game1 = matchData[0];
+    // const game1 = matchData[0];
     return (
         <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
