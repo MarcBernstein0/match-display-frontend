@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Moment } from "moment";
 import { Matches } from "../models/matches.interface";
 
@@ -13,7 +13,11 @@ const instance = axios.create({
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
-    get: (url: string, params: { date: string }) => instance.get(url, {params}).then(responseBody),
+    get: (url: string, params: { date: string }) => instance.get(url, {params})
+                                                                .then(responseBody)
+                                                                .catch((err: Error | AxiosError) => {
+                                                                    return err.message
+                                                                }),
 };
 
 export const Match = {

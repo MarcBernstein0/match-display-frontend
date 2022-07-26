@@ -8,7 +8,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [matchResult, setMatches] = useState<Matches[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
-  // const [error, setError] = useState<Error>(null);
+  const [error, setError] = useState<string>("");
   
   useEffect(() => {
     const parsedDate = moment("2022-07-20", "YYYY-MM-DD");
@@ -20,15 +20,23 @@ function App() {
       .catch((err) => {
         setIsLoaded(true);
         setIsError(true);
+        setError(err);
       });
   }, []);
 
   if (isLoaded){
-  console.log("in App function", matchResult, matchResult.length);
-    return (
+  console.log("in App function", isError, error);
+    if (!isError){
+      return (
     
-      <CustomizedTables {...matchResult}/>
-    );
+        <CustomizedTables {...matchResult}/>
+      );
+    } else {
+      return (
+        <div>{error}</div>
+      );
+    }
+    
   } else {
     return (
       <div>Loading...</div>
