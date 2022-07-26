@@ -1,10 +1,31 @@
-import { Grid } from '@mui/material';
+import { CssBaseline, Grid } from '@mui/material';
+import { deepOrange, grey } from '@mui/material/colors';
+import {ThemeProvider, createTheme } from '@mui/material/styles';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Match } from './api/api';
 import LoadingAnimation from './components/loading';
 import CustomizedTables from './components/table';
 import { Matches } from './models/matches.interface';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark"
+  }
+  // palette: {
+  //   mode: "dark",
+  //   primary: "#1A2027",
+  //   divider: deepOrange[700],
+  //   background: {
+  //     default: deepOrange[900],
+  //     paper: deepOrange[900],
+  //   },
+  //   text: {
+  //     primary: "#fff",
+  //     secondary: grey[500],
+  //   },
+  // },
+});
 
 function App() {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -26,71 +47,33 @@ function App() {
       });
   }, []);
 
-  if (isLoaded){
-  console.log("in App function", matchResult, error);
-    if (!isError){
-      return (
-        // <Grid display="flex"
-        //     justifyContent="center"
-        //     alignItems="center"
-        //     minHeight="100vh" 
-        // >
-        <div>
-          {matchResult.map((game) => (
-            <CustomizedTables matchData={game} />
-          ))}
-        </div>
-          // <CustomizedTables matchData={matchResult}/>
-        // </Grid>
-      );
-    } else {
-      return (
-        <div>{error}</div>
-      );
-    }
-    
-  } else {
-    return (
-      <Grid display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="100vh" 
-      >
-        <LoadingAnimation />
-      </Grid>
-    );
-  }
-
-  
-  // const [matchResult, setMatches] = useState<Matches[]>([]);
-  // const [isError, setIsError] = useState<boolean>(false);
-  
-  // useEffect(() => {
-  //   const parsedDate = moment("2022-07-19", "YYYY-MM-DD");
-  //   Match.getMatches(parsedDate)
-  //     .then((data) => {
-  //       setMatches(data);
-  //     })
-  //     .catch((err) => {
-  //       setIsError(true);
-  //     });
-  // }, []);
-
-  // return (
-  //   <DenseTable />
-    // <div className="App">
-    //   <ul className="Books">
-    //     {matchResult.map((matchMetaData) => (
-    //       <li key={matchMetaData.tournament_id}>
-    //         <h3>{matchMetaData.game_name}</h3>
-    //         {matchMetaData.match_list.map((match) => (
-    //           <p>{match.id} {match.player1_name} {match.player2_name} {match.round}</p>
-    //         ))}
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
-  // );
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      {isLoaded ? (
+        <span>
+          {!isError ? (
+            <Grid display="flex"
+              justifyContent="center"
+              minHeight="100vh"
+          >
+              {matchResult.map((game) => (
+                <CustomizedTables matchData={game} />
+              ))}
+          </Grid>
+          ) : <div>{error}</div>}
+        </span>
+        )
+        : 
+        <Grid display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="100vh"
+          >
+          <LoadingAnimation />
+        </Grid>}
+    </ThemeProvider>
+  );
 }
 
 export default App;
