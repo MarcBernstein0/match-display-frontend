@@ -25,11 +25,11 @@ function App() {
   }, []);
 
   if (isLoaded){
-  console.log("in App function", isError, error);
+  console.log("in App function", matchResult, error);
     if (!isError){
       return (
     
-        <CustomizedTables {...matchResult}/>
+        <CustomizedTables matchData={matchResult}/>
       );
     } else {
       return (

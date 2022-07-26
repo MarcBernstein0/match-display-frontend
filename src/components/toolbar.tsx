@@ -21,7 +21,7 @@ export function TableToolBar({ gameName }: TableToolbarProps){
                 id="tableTittle"
                 component="div"
             >
-                gameName
+                {gameName}
             </Typography>
         </Toolbar>
     )
